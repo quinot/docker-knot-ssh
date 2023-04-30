@@ -1,0 +1,43 @@
+#! /bin/sh
+
+top_dir=/storage/knotssh
+
+## Host keys
+
+key_dir=${top_dir}/hostkeys
+key_template=${key_dir}/ssh_host_%s_key
+conf_file=${key_dir}/hostkeys.conf
+conf_link=/etc/ssh/sshd_config.d/hostkeys.conf
+
+mkdir -p ${key_dir}
+
+if [ ! -f ${conf_file} ]; then
+    for alg in rsa ecdsa ed25519; do
+      key_file=$(printf "${key_template}" ${alg})
+      if [ ! -f ${key_file} ]; then
+        echo "Generating host key: ${key_file}" 1>&2
+        ssh-keygen -t ${alg} -f ${key_file} -N ""
+        echo "HostKey ${key_file}" >> ${conf_file}
+      fi
+    done
+fi
+
+ln -sf ${conf_file} ${conf_link}
+
+## User home dir
+
+home_dir=${top_dir}/home
+dotssh_dir=${home_dir}/.ssh
+
+mkdir -p ${dotssh_dir}
+
+if [ -n "$KNOT_SSH_PUBLIC_KEY" ]; then
+    cat > ${dotssh_dir}/authorized_keys <<EOF
+no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty,command="internal-sftp" $KNOT_SSH_PUBLIC_KEY
+no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty,command="/usr/local/sbin/knotc-wrapper" $KNOT_SSH_PUBLIC_KEY
+EOF
+    chmod 444 ${dotssh_dir}/authorized_keys
+else
+    echo "Warning: no public key set" 1>&2
+    rm -f ${dotssh_dir}/authorized_keys
+fi

@@ -1,0 +1,10 @@
+#! /bin/sh
+
+set -f
+set -- $SSH_ORIGINAL_COMMAND
+
+if [ "$1" == "knotc" ]; then
+  exec "$@"
+else
+  echo "Command not permitted"
+fi
