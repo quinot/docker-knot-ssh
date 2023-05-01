@@ -33,8 +33,7 @@ mkdir -p ${dotssh_dir}
 
 if [ -n "$KNOT_SSH_PUBLIC_KEY" ]; then
     cat > ${dotssh_dir}/authorized_keys <<EOF
-no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty,command="internal-sftp" $KNOT_SSH_PUBLIC_KEY
-no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty,command="/usr/local/sbin/knotc-wrapper" $KNOT_SSH_PUBLIC_KEY
+no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty,command="/usr/local/sbin/command-wrapper" $KNOT_SSH_PUBLIC_KEY
 EOF
     chmod 444 ${dotssh_dir}/authorized_keys
 else
