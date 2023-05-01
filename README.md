@@ -11,9 +11,6 @@ Automated builds of the image are available on:
 
 # Container parameters
 
-## Volumes
+## Env variables
 
-In addition to the volumes of the standard Knot container, this one exposes:
-/var/lib/knot-ssh, which containers
-* host_keys
-* public_keys
+`KNOT_SSH_PUBLIC_KEY`: public key allowed to SSH into the container for SFTP or knotc.
