@@ -3,8 +3,13 @@
 set -f
 set -- $SSH_ORIGINAL_COMMAND
 
+PATH=/usr/bin:/usr/sbin:/bin:/sbin
+export PATH
+
+SFTP_COMMAND=$(sshd -T| sed -n '/^subsystem sftp /s///p')
+
 case "$1" in
-  knotc|/usr/sbin/sftp-server)
+  knotc|"$SFTP_COMMAND")
     exec "$@"
     ;;
   *)
