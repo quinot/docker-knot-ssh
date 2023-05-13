@@ -8,7 +8,7 @@ RUN apt update && \
 
 # Set up user account
 ARG KNOT_SSH_UID=5322
-RUN adduser --quiet --system --group --no-create-home --home /storage/knotssh/home --uid=${KNOT_SSH_UID} --shell /bin/sh knotssh
+RUN adduser --quiet --system --ingroup knot --no-create-home --home /storage/knotssh/home --uid=${KNOT_SSH_UID} --shell /bin/sh knotssh
 
 # Install files
 COPY files/ /
