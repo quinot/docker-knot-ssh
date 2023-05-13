@@ -55,7 +55,7 @@ if [ "$#" -eq 0 ] || [ "${1#-}" != "$1" ]; then
   /usr/sbin/sshd -T| sed -n '/^subsystem sftp /s///p' > /run/sshd/sftp_command
 
   # No command passed: start daemons
-  /usr/sbin/sshd
+  /usr/sbin/sshd -e
   exec knotd "$@"
 else
   exec "$@"

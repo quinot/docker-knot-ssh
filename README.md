@@ -17,4 +17,3 @@ Automated builds of the image are available on:
 # TODO
 
 * Transition to supervisord
-* Ensure logs from both daemons properly go to container's stdout

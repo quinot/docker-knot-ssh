@@ -4,7 +4,7 @@ FROM cznic/knot:latest
 
 RUN apt update && \
   RUNLEVEL=1 apt install -y openssh-server && rm -f /etc/ssh/ssh_host_* && \
-  apt install tini
+  apt install -y tini
 
 # Set up user account
 ARG KNOT_SSH_UID=5322
