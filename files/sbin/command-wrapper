@@ -8,12 +8,16 @@ export PATH
 
 SFTP_COMMAND=$(cat /run/sshd/sftp_command)
 
-case "$1" in
-  knotc|"rsync --server"*|"$SFTP_COMMAND")
+if [ "$1" = knotc ]; then
     exec "$@"
-    ;;
-  *)
-    echo "Command not permitted" 1>&2
-    exit 1
-    ;;
-esac
+else
+  case "$*" in
+    "rsync --server"*|"$SFTP_COMMAND")
+    exec "$@"
+      ;;
+    *)
+      echo "Command not permitted" 1>&2
+      exit 1
+      ;;
+  esac
+fi
