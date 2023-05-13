@@ -9,7 +9,7 @@ export PATH
 SFTP_COMMAND=$(cat /run/sshd/sftp_command)
 
 case "$1" in
-  knotc|"$SFTP_COMMAND")
+  knotc|"rsync --server"*|"$SFTP_COMMAND")
     exec "$@"
     ;;
   *)
