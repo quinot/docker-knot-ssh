@@ -50,6 +50,10 @@ mkdir -p /run/sshd
 #### Now start the whole thing
 
 if [ "$#" -eq 0 ] || [ "${1#-}" != "$1" ]; then
+  # Extract SFTP subsystem command (must be done as root because
+  # sshd -T wants to see host keys).
+  /usr/sbin/sshd -T| sed -n '/^subsystem sftp /s///p' > /run/sshd/sftp_command
+
   # No command passed: start daemons
   /usr/sbin/sshd
   exec knotd "$@"
