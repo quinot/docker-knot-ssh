@@ -33,9 +33,9 @@ dotssh_dir=${home_dir}/.ssh
 
 mkdir -p ${dotssh_dir}
 
-if [ -n "$KNOT_SSH_PUBLIC_KEY" ]; then
+if [ -n "$KNOTSSH_PUBLIC_KEY" ]; then
     cat > ${dotssh_dir}/authorized_keys <<EOF
-no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty,command="/sbin/command-wrapper" $KNOT_SSH_PUBLIC_KEY
+no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty,command="/sbin/command-wrapper" $KNOTSSH_PUBLIC_KEY
 EOF
     chmod 444 ${dotssh_dir}/authorized_keys
 else

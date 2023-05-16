@@ -13,4 +13,7 @@ RUN adduser --quiet --system --ingroup knot --no-create-home --home /storage/kno
 # Install files
 COPY files/ /
 
+# Set up writable config directory
+RUN mkdir -p /config/knot.conf.d /config/zones && chown -R knotssh /config
+
 ENTRYPOINT ["/usr/bin/tini", "--", "/sbin/entrypoint"]
