@@ -16,4 +16,4 @@ COPY files/ /
 # Set up writable config directory
 RUN mkdir -p /config/knot.conf.d /config/zones && chown -R knotssh /config
 
-ENTRYPOINT ["/usr/bin/tini", "--", "/sbin/entrypoint"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/sbin/entrypoint"]
