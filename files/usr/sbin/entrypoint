@@ -47,6 +47,10 @@ fi
 
 mkdir -p /run/sshd
 
+#### Clear stale pid files (which could be left over from unclean shutfown)
+
+rm -f /rundir/knot.pid /var/run/sshd.pid
+
 #### Now start the whole thing
 
 if [ "$#" -eq 0 ] || [ "${1#-}" != "$1" ]; then
